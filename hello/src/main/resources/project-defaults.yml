@@ -1,0 +1,41 @@
+credentials:
+  CPR:
+    ID: MQTeL8nq9FL8myJ2LW476jE9VC3NjECw
+    secret: 6Lrm6C2Vqcd92rmv72n7L74xFf8d9Tkn
+    baseURL: https://acceptance.apps.psu.edu
+swarm:
+  deployment:
+    hello.war:
+      web:
+        login-config:
+          auth-method: KEYCLOAK
+        security-constraints:
+          - url-pattern: /rest/nids/*
+            methods: [GET]
+            roles: [admin]
+  keycloak:
+    security:
+    secure-deployments:
+      hello.war:
+        realm: demo
+        auth-server-url: http://localhost:8000/auth
+        ssl-required: external
+        bearer-only: true
+        public-client: true
+        resource: vanilla
+  management:
+    http:
+      port: 9090
+  datasources:
+    data-sources:
+      lionpath-ds:
+        driver-name: oracle
+        connection-url: jdbc:oracle:thin:@test-db1.lionpath.psu.edu:1522/CS90DEV
+        user-name: gms20
+        password: GrandTour78
+      ExampleDS:
+        driver-name: h2
+        connection-url: jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+        user-name: sa
+        password: sa       
+   
