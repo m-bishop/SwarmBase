@@ -1,0 +1,40 @@
+credentials:
+  CPR:
+    ID: **CLIENT ID**
+    secret: **CLIENT SECRET**
+    baseURL: **HTTPS:\\your.url**
+swarm:
+  deployment:
+    hello.war:
+      web:
+        login-config:
+          auth-method: KEYCLOAK
+        security-constraints:
+          - url-pattern: /rest/nids/*
+            methods: [GET]
+            roles: [admin]
+  keycloak:
+    security:
+    secure-deployments:
+      hello.war:
+        realm: demo
+        auth-server-url: http://localhost:8000/auth
+        ssl-required: external
+        bearer-only: true
+        public-client: true
+        resource: vanilla
+  management:
+    http:
+      port: 9090
+  datasources:
+      lionpath-ds:
+        driver-name: oracle
+        connection-url: jdbc:oracle:thin:@test-db1.lionpath.psu.edu:1522/CS90DEV
+        user-name: *USER*
+        password: *PASS*
+      ExampleDS:
+        driver-name: h2
+        connection-url: jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FAL$
+        user-name: sa
+        password: sa
+
